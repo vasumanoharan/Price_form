@@ -36,17 +36,35 @@
             <div>
                 <button type="button" onclick="addItem()">Add Item</button>
             </div>
+            <div>
+                <select name="Shop_Name" id="Shop_Name">
+                    <option value="Niranjan">Niranjan</option>
+                    <option value="Amudha">Amudha</option>
+                    <option value="Santhi">Santhi</option>
+                    <option value="Indira">Indira</option>
+                    <option value="Baskar">Baskar</option>
+                    <option value="Raghu">Raghu</option>
+                    <option value="Pooma">Pooma</option>
+                    <option value="Kaala">Kaala</option>
+                    <option value="Mahalaksmi">Mahalaksmi</option>
+                    
+                    <option value="Others">Others</option>
+
+                </select>
+            </div>
 
         </form>
         <br>
-        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin-top: 20px;padding:50px;">
+        <div
+            style="display: flex;flex-direction: column;justify-content: center;align-items: center;margin-top: 20px;padding:50px;">
             <div>
                 <input type="text" id="searchInput" placeholder="Search by name" oninput="searchItems()">
             </div>
-            
+
 
             <h2>All Items</h2>
-            <ul id="itemsList"></ul>
+
+            <ol id="itemsList" style="font-weight: 500;"></ol>
         </div>
 
     </div>
@@ -59,18 +77,20 @@
         function addItem() {
             const nameInput = document.getElementById('name');
             const priceInput = document.getElementById('price');
+            const ShopInput = document.getElementById('Shop_Name')
 
             const name = nameInput.value;
             const price = parseFloat(priceInput.value);
+            const Shop = ShopInput.value;
 
             // Validate input
-            if (!name || isNaN(price)) {
+            if (!name || isNaN(price || !Shop)) {
                 alert('Please fill in all fields');
                 return;
             }
 
             // Create a new item object
-            const newItem = { name, price };
+            const newItem = { name, price, Shop };
 
             // Add the new item object to the array
             items.push(newItem);
@@ -84,6 +104,7 @@
             // Clear the form
             nameInput.value = '';
             priceInput.value = '';
+            ShopInput.value = '';
         }
 
         function displayItems(itemsToDisplay = items) {
@@ -94,8 +115,8 @@
                 const item = itemsToDisplay[i];
 
                 const listItem = document.createElement('li');
-                listItem.textContent = `Name: ${item.name}, Price: ${item.price}`;
-
+                listItem.innerHTML = `Name: ${item.name}, Price: ${item.price}, Shop_Name: ${item.Shop}`;
+                
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
                 deleteButton.onclick = function () {
@@ -113,6 +134,7 @@
             displayItems();
         }
 
+        // Search bar codings
         function searchItems() {
             const searchInput = document.getElementById('searchInput');
             const searchTerm = searchInput.value.toLowerCase();
